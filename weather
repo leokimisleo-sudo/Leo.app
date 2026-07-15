@@ -1,0 +1,74 @@
+import streamlit as st
+import requests
+from gtts import gTTS
+from io import BytesIO
+
+st.set_page_config(page_title="weatherbot", page_icon="🌤️")
+
+st.title("WeatherBot")
+st.write("City name + AI advice")
+
+def get_city(city):
+
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+    data = requests.get(url).json()
+    if "results" in data:
+        return data["results"][0]
+    return None
+
+def get_weather(lat, lon):
+    url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric"
+    data = requests.get(url).json()
+    return data
+
+
+
+def advice(temp, rain):
+    if temp < 10:
+        return "ITS THE ICE AGE"
+    elif temp > 30:
+        return "THE SUN IS A DEADLY LASERRRRRRRRRRRRRRRRRR"
+    else:
+        return "Touch grass. Now."
+
+def speak(text):
+    tts = gTTS(text=text, lang="en")
+    audio_file = BytesIO()
+    tts.write_to_fp(audio_file)
+    audio_file.seek(0)
+    st.audio(audio_file, format="audio/mp3")
+    
+
+city  = st.text_input(
+    "city"
+    "new york"
+)
+
+if st.button("get weather"):
+
+
+if place:
+    lat=latitude
+    lon=longitude
+
+    weather = get_weather(lat, lon)
+
+    temp = round(temp + 9/5 + 32,1)
+
+    wind = weather["current"][windspeed_10m]
+
+    rain = weather["daily"][precipitation_probability_max][0]
+
+
+    msg = advice(temp, rain)
+
+    st.success(f"""{city} weather: {temp}°F, wind speed: {wind} m/s, rain probability: {rain}%.)
+    AI advice: {msg}""")
+
+    speech = f"""It is {temp}°F in{city}, with a windspeed of {wind} m/s, and probabily of rain at {rain}%."""
+    audio = speak(speech)
+    st.audio(
+audio, format="audio/mp3"
+    )
+else:
+    st.error("It is approximatly 4.37 lightyears away. It is 5,800 degrees Kelvin, and has a rain probability of 0%. I don't know why you want to go to Alpha Centauri, but sure.")

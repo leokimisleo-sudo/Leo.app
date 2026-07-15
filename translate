@@ -1,0 +1,80 @@
+import streamlit as st
+from transformers import pipeline
+
+st.set_page_config(page_title="AI Translator", page_icon="🌐")
+
+st.title("AI translator")
+st.write("translate stuff")
+
+@st.cache_resource
+def load_model():
+    return pipeline("translation", model="Helsinki-NLP/opus-mt-en-de")
+
+translator = load_model()
+
+languages = {
+    "English": "Helsinki-NLP/opus-mt-en-en",
+    "French": "Helsinki-NLP/opus-mt-en-fr",
+    "Spanish": "Helsinki-NLP/opus-mt-en-es",
+    "German": "Helsinki-NLP/opus-mt-en-de",
+    "Italian": "Helsinki-NLP/opus-mt-en-it",
+    "Portuguese": "Helsinki-NLP/opus-mt-en-pt",
+    "Dutch": "Helsinki-NLP/opus-mt-en-nl",
+    "Russian": "Helsinki-NLP/opus-mt-en-ru",
+    "Chinese": "Helsinki-NLP/opus-mt-en-zh",
+    "Japanese": "Helsinki-NLP/opus-mt-en-ja",
+    "Korean": "Helsinki-NLP/opus-mt-en-ko",
+    "Arabic": "Helsinki-NLP/opus-mt-en-ar",
+    "Hindi": "Helsinki-NLP/opus-mt-en-hi",
+    "Bengali": "Helsinki-NLP/opus-mt-en-bn",
+    "Urdu": "Helsinki-NLP/opus-mt-en-ur",
+    "Vietnamese": "Helsinki-NLP/opus-mt-en-vi",
+    "Indonesian": "Helsinki-NLP/opus-mt-en-id",
+    "Turkish": "Helsinki-NLP/opus-mt-en-tr",
+    "Polish": "Helsinki-NLP/opus-mt-en-pl",
+    "Romanian": "Helsinki-NLP/opus-mt-en-ro",
+    "Czech": "Helsinki-NLP/opus-mt-en-cs",
+    "Swedish": "Helsinki-NLP/opus-mt-en-sv",
+    "Danish": "Helsinki-NLP/opus-mt-en-da",
+    "Finnish": "Helsinki-NLP/opus-mt-en-fi",
+    "Norwegian": "Helsinki-NLP/opus-mt-en-no",
+    "Greek": "Helsinki-NLP/opus-mt-en-el",
+    "Hungarian": "Helsinki-NLP/opus-mt-en-hu",
+    "Bulgarian": "Helsinki-NLP/opus-mt-en-bg",
+    "Lithuanian": "Helsinki-NLP/opus-mt-en-lt",
+    "Latvian": "Helsinki-NLP/opus-mt-en-lv",
+    "Estonian": "Helsinki-NLP/opus-mt-en-et",
+    "Slovak": "Helsinki-NLP/opus-mt-en-sk",
+    "Slovenian": "Helsinki-NLP/opus-mt-en-sl",
+    "Croatian": "Helsinki-NLP/opus-mt-en-hr",
+    "Serbian": "Helsinki-NLP/opus-mt-en-sr",
+    "Macedonian": "Helsinki-NLP/opus-mt-en-mk",
+    "Albanian": "Helsinki-NLP/opus-mt-en-sq",
+    "Bosnian": "Helsinki-NLP/opus-mt-en-bs",
+    "Montenegrin": "Helsinki-NLP/opus-mt-en-me",
+    "Maltese": "Helsinki-NLP/opus-mt-en-mt",
+    "Icelandic": "Helsinki-NLP/opus-mt-en-is",
+    "Irish": "Helsinki-NLP/opus-mt-en-ga",
+    "Welsh": "Helsinki-NLP/opus-mt-en-cy",
+    "Scottish Gaelic": "Helsinki-NLP/opus-mt-en-gd",
+    "Yiddish": "Helsinki-NLP/opus-mt-en-yi",
+    "Esperanto": "Helsinki-NLP/opus-mt-en-eo",
+    "Latin": "Helsinki-NLP/opus-mt-en-la",
+    "Swahili": "Helsinki-NLP/opus-mt-en-sw",
+    "Zulu": "Helsinki-NLP/opus-mt-en-zu",
+    "Xhosa": "Helsinki-NLP/opus-mt-en-xh",
+    "Amharic": "Helsinki-NLP/opus-mt-en-am",
+    "Hausa": "Helsinki-NLP/opus-mt-en-ha"
+}
+
+language = st.selectbox("Select language", list(languages.keys()))
+text = st.text_area("Be english")
+
+if st.button("Translate"):
+
+    with st.spinner("Translating..."):
+        translator = pipeline("translation", model=languages[language])
+        results = translator(text)
+
+        st.success(results[0]["Yabadabadoo"])
+

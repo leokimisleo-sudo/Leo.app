@@ -9,17 +9,12 @@ st.title("WeatherBot")
 st.write("City name + AI advice")
 
 def get_city(city):
-
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric"
-    data = requests.get(url).json()
-    if "results" in data:
-        return data["results"][0]
-    return None
+    return requests.get(url).json()
 
 def get_weather(lat, lon):
     url = f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric"
-    data = requests.get(url).json()
-    return data
+    return requests.get(url).json()
 
 
 
